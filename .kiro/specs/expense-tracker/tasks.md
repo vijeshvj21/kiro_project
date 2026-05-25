@@ -15,13 +15,13 @@ Implement a full-stack expense tracking application with a Java Spring Boot 4.0.
   - Create `JacksonConfig.java` in `com.project.kiro.config` to configure `BigDecimal` serialization and ISO-8601 date formats
   - _Requirements: 1.1, 2.1, 5.1_
 
-- [ ] 2. Data models and JPA entities
-  - [ ] 2.1 Implement `Category` and `Expense` JPA entities
+- [x] 2. Data models and JPA entities
+  - [x] 2.1 Implement `Category` and `Expense` JPA entities
     - Create `Category.java` in `com.project.kiro.model` with `@Entity`, `@Table(uniqueConstraints)`, Lombok `@Data/@Builder`, `id`, `name`, `nameLower`, and `expenses` one-to-many
     - Create `Expense.java` in `com.project.kiro.model` with `@Entity`, `@Table(indexes)`, Lombok annotations, `id`, `amount` (`BigDecimal`), `expenseDate` (`LocalDate`), `category` (eager ManyToOne), `description`
     - _Requirements: 1.1, 1.8, 5.1_
 
-  - [ ] 2.2 Implement JPA repositories
+  - [x] 2.2 Implement JPA repositories
     - Create `CategoryRepository.java` extending `JpaRepository<Category, Long>` with `findByNameLowerIgnoreCase` and `findAllByOrderByNameAsc`
     - Create `ExpenseRepository.java` extending `JpaRepository<Expense, Long>` with query methods for date-range filtering, weekly/monthly aggregation, and category breakdown (use `@Query` JPQL where needed)
     - _Requirements: 2.7, 3.1, 4.1, 4.5_
