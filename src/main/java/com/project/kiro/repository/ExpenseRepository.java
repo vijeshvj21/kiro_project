@@ -73,4 +73,14 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
            "WHERE e.expenseDate BETWEEN :start AND :end " +
            "GROUP BY e.category.name")
     List<Object[]> sumByCategoryAndDateRange(@Param("start") LocalDate start, @Param("end") LocalDate end);
+
+    /**
+     * Count the number of expenses associated with a given category.
+     * Used by CategoryService to prevent deletion of categories that are in use.
+     * Satisfies Requirement 5.8.
+     *
+     * @param categoryId the ID of the category to check
+     * @return the number of expenses referencing this category
+     */
+    long countByCategoryId(Long categoryId);
 }
