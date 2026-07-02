@@ -210,7 +210,7 @@ Implement a full-stack expense tracking application with a Java Spring Boot 4.0.
 - [x] 12. Checkpoint — backend complete
   - Ensure all backend tests pass (unit, integration, property). Ask the user if questions arise.
 
-- [-] 13. React frontend — project setup and shared infrastructure
+- [x] 13. React frontend — project setup and shared infrastructure
   - Initialise the React app (Vite) in a `frontend/` directory with React Router v6, Axios, Recharts, and Tailwind CSS
   - Create `src/api/client.js`: configure Axios base URL (`http://localhost:8080`), add response interceptor to dispatch non-2xx errors to a global error state
   - Create `src/api/expenses.js`, `src/api/categories.js`, `src/api/reports.js` with typed API functions for every backend endpoint
@@ -220,7 +220,7 @@ Implement a full-stack expense tracking application with a Java Spring Boot 4.0.
   - _Requirements: 6.6, 7.1–7.6, 8.1–8.6_
 
 - [ ] 14. Expense list and form pages
-  - [~] 14.1 Implement `ExpenseTable`, `ExpenseRow`, and `ExpenseListPage`
+  - [ ] 14.1 Implement `ExpenseTable`, `ExpenseRow`, and `ExpenseListPage`
     - `ExpenseListPage` fetches `GET /api/v1/expenses` on mount and renders `ExpenseTable`
     - `ExpenseRow` shows amount, date, category, description with Edit and Delete buttons; Delete triggers `ConfirmDialog` before calling `DELETE /api/v1/expenses/{id}`
     - _Requirements: 2.4, 2.6, 2.7_
@@ -236,7 +236,7 @@ Implement a full-stack expense tracking application with a Java Spring Boot 4.0.
     - _Requirements: 1.2, 1.3, 1.4, 2.2_
 
 - [ ] 15. Category management page
-  - [~] 15.1 Implement `CategoryList`, `CategoryForm`, and `CategoryPage`
+  - [-] 15.1 Implement `CategoryList`, `CategoryForm`, and `CategoryPage`
     - `CategoryPage` fetches `GET /api/v1/categories` and renders `CategoryList` with inline edit and delete per row
     - `CategoryForm` handles create and update; shows 409 conflict and 400 validation errors from the API
     - Delete triggers `ConfirmDialog`; shows 409 error if category is in use
@@ -248,7 +248,7 @@ Implement a full-stack expense tracking application with a Java Spring Boot 4.0.
     - _Requirements: 5.2, 5.8, 5.11_
 
 - [ ] 16. Dashboard — weekly, monthly, and yearly summary cards
-  - [~] 16.1 Implement `WeekNavigator`, `MonthNavigator`, `YearNavigator`
+  - [-] 16.1 Implement `WeekNavigator`, `MonthNavigator`, `YearNavigator`
     - Each navigator maintains selected period in local state and exposes prev/next controls
     - `WeekNavigator` computes ISO week arithmetic; `MonthNavigator` and `YearNavigator` handle month/year rollover
     - _Requirements: 6.3, 7.4, 8.4_
