@@ -5,12 +5,15 @@ import CategoryList from '../components/category/CategoryList';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import ErrorMessage from '../components/common/ErrorMessage';
 
+/**
+ * Page for managing expense categories.
+ * Shows a form at the top for creating/editing and a list below.
+ */
 function CategoryPage() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [editingCategory, setEditingCategory] = useState(null); // null = no edit in progress
-  const [showForm, setShowForm] = useState(false);
+  const [editingCategory, setEditingCategory] = useState(null); // null = create mode
 
   async function fetchCategories() {
     setLoading(true);
@@ -29,74 +32,39 @@ function CategoryPage() {
     fetchCategories();
   }, []);
 
-  // Called by CategoryForm after a successful save
-  function handleSaved(savedCategory) {
-    if (editingCategory) {
-      // Replace the updated category in the list, then re-sort alphabetically
-      setCategories((prev) =>
-        prev
-          .map((c) => (c.id === savedCategory.id ? savedCategory : c))
-          .sort((a, b) => a.name.localeCompare(b.name))
-      );
-    } else {
-      // Append the new category and re-sort alphabetically
-      setCategories((prev) =>
-        [...prev, savedCategory].sort((a, b) => a.name.localeCompare(b.name))
-      );
-    }
-    setShowForm(false);
+  // Called by CategoryForm after a successful save — refresh list and clear edit state
+  async function handleSave() {
     setEditingCategory(null);
+    await fetchCategories();
   }
 
-  // Called by CategoryList after a successful delete
-  function handleDeleted(id) {
+  // Called by CategoryList when Edit is clicked — set the category to edit
+  function handleEdit(category) {
+    setEditingCategory(category);
+  }
+
+  // Called by CategoryList after a successful delete — remove from local state
+  function handleDelete(id) {
     setCategories((prev) => prev.filter((c) => c.id !== id));
   }
 
-  // Open form for a new category
-  function handleAddClick() {
-    setEditingCategory(null);
-    setShowForm(true);
-  }
-
-  // Open form pre-filled for editing
-  function handleEdit(category) {
-    setEditingCategory(category);
-    setShowForm(true);
-  }
-
-  // Close/cancel the form
+  // Cancel editing (revert form to create mode)
   function handleCancel() {
-    setShowForm(false);
     setEditingCategory(null);
   }
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-8">
-      {/* Page header */}
-      <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900">Categories</h1>
-        {!showForm && (
-          <button
-            type="button"
-            onClick={handleAddClick}
-            className="rounded bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            + Add Category
-          </button>
-        )}
-      </div>
+      <h1 className="mb-6 text-2xl font-bold text-gray-900">Categories</h1>
 
-      {/* Create / Edit form */}
-      {showForm && (
-        <div className="mb-6">
-          <CategoryForm
-            editingCategory={editingCategory}
-            onSaved={handleSaved}
-            onCancel={handleCancel}
-          />
-        </div>
-      )}
+      {/* Create / Edit form — always visible at top */}
+      <div className="mb-6">
+        <CategoryForm
+          editingCategory={editingCategory}
+          onSave={handleSave}
+          onCancel={handleCancel}
+        />
+      </div>
 
       {/* List area */}
       {loading ? (
@@ -107,7 +75,7 @@ function CategoryPage() {
         <CategoryList
           categories={categories}
           onEdit={handleEdit}
-          onDeleted={handleDeleted}
+          onDelete={handleDelete}
         />
       )}
     </div>

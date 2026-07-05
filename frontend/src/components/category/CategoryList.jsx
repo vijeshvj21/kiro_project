@@ -6,17 +6,17 @@ import ConfirmDialog from '../common/ConfirmDialog';
  * Renders a table of categories with inline Edit and Delete actions per row.
  *
  * @param {object}    props
- * @param {Array}     props.categories       - List of category objects { id, name }
- * @param {Function}  props.onEdit           - Called with a category object when Edit is clicked
- * @param {Function}  props.onDeleted        - Called with the deleted category id on success
+ * @param {Array}     props.categories - List of category objects { id, name }
+ * @param {Function}  props.onEdit     - Called with a category object when Edit is clicked
+ * @param {Function}  props.onDelete   - Called with the deleted category id on success
  */
-function CategoryList({ categories, onEdit, onDeleted }) {
-  const [confirmId, setConfirmId] = useState(null);       // id pending confirmation
-  const [deletingId, setDeletingId] = useState(null);     // id currently being deleted
-  const [rowErrors, setRowErrors] = useState({});         // { [id]: errorMessage }
+function CategoryList({ categories, onEdit, onDelete }) {
+  const [confirmId, setConfirmId] = useState(null);   // id awaiting confirmation
+  const [deletingId, setDeletingId] = useState(null); // id currently being deleted
+  const [rowErrors, setRowErrors] = useState({});     // { [id]: errorMessage }
 
   function handleDeleteClick(id) {
-    // Clear any previous error for this row and open the confirm dialog
+    // Clear any previous error for this row before opening dialog
     setRowErrors((prev) => ({ ...prev, [id]: undefined }));
     setConfirmId(id);
   }
@@ -27,13 +27,13 @@ function CategoryList({ categories, onEdit, onDeleted }) {
     setDeletingId(id);
     try {
       await deleteCategory(id);
-      onDeleted(id);
+      onDelete(id);
     } catch (err) {
       const status = err?.response?.status;
       const apiMessage = err?.response?.data?.message;
       let msg;
       if (status === 409) {
-        msg = apiMessage || 'This category is in use and cannot be deleted.';
+        msg = apiMessage || 'Category is in use and cannot be deleted.';
       } else if (status === 404) {
         msg = 'Category not found.';
       } else {
@@ -92,10 +92,7 @@ function CategoryList({ categories, onEdit, onDeleted }) {
                   <td className="px-4 py-3">
                     <span className="text-gray-800">{category.name}</span>
                     {rowError && (
-                      <p
-                        role="alert"
-                        className="mt-1 text-xs text-red-600"
-                      >
+                      <p role="alert" className="mt-1 text-xs text-red-600">
                         {rowError}
                       </p>
                     )}

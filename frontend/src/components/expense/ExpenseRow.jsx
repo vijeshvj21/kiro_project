@@ -14,8 +14,8 @@ function ExpenseRow({ expense, onDelete }) {
   const navigate = useNavigate();
   const [showConfirm, setShowConfirm] = useState(false);
 
-  const formattedAmount = Number(expense.amount).toFixed(2);
-  const formattedDate = new Date(expense.date).toLocaleDateString();
+  const formattedAmount = `$${Number(expense.amount).toFixed(2)}`;
+  const formattedDate = expense.expenseDate;
 
   const handleEdit = () => {
     navigate(`/expenses/${expense.id}/edit`);
@@ -39,7 +39,7 @@ function ExpenseRow({ expense, onDelete }) {
     <>
       <tr className="border-b border-gray-200 hover:bg-gray-50">
         <td className="px-4 py-3 text-sm text-gray-700">{formattedDate}</td>
-        <td className="px-4 py-3 text-sm text-gray-700">${formattedAmount}</td>
+        <td className="px-4 py-3 text-sm text-gray-700">{formattedAmount}</td>
         <td className="px-4 py-3 text-sm text-gray-700">
           {expense.categoryName ?? expense.category?.name ?? '—'}
         </td>

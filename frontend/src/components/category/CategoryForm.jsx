@@ -5,16 +5,16 @@ import { createCategory, updateCategory } from '../../api/categories';
  * Form for creating or editing a category.
  *
  * @param {object}        props
- * @param {object|null}   props.editingCategory - Category to edit, or null for create
- * @param {Function}      props.onSaved         - Called with the saved category on success
+ * @param {object|null}   props.editingCategory - Category to edit, or null for create mode
+ * @param {Function}      props.onSave          - Called after a successful save
  * @param {Function}      props.onCancel        - Called when the user cancels
  */
-function CategoryForm({ editingCategory, onSaved, onCancel }) {
+function CategoryForm({ editingCategory, onSave, onCancel }) {
   const [name, setName] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
 
-  // Pre-fill name when editing
+  // Pre-fill name when editing, clear when switching to create mode
   useEffect(() => {
     setName(editingCategory ? editingCategory.name : '');
     setError('');
@@ -34,19 +34,18 @@ function CategoryForm({ editingCategory, onSaved, onCancel }) {
 
     setSubmitting(true);
     try {
-      let saved;
       if (isEdit) {
-        saved = await updateCategory(editingCategory.id, { name: trimmed });
+        await updateCategory(editingCategory.id, { name: trimmed });
       } else {
-        saved = await createCategory({ name: trimmed });
+        await createCategory({ name: trimmed });
       }
-      onSaved(saved);
+      onSave();
     } catch (err) {
       const status = err?.response?.status;
       const apiMessage = err?.response?.data?.message;
 
       if (status === 409) {
-        setError(apiMessage || 'A category with that name already exists.');
+        setError(apiMessage || 'Category already exists.');
       } else if (status === 400) {
         setError(apiMessage || 'Invalid category name.');
       } else {
@@ -68,7 +67,10 @@ function CategoryForm({ editingCategory, onSaved, onCancel }) {
       </h2>
 
       {error && (
-        <p role="alert" className="rounded-md border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-700">
+        <p
+          role="alert"
+          className="rounded-md border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-700"
+        >
           {error}
         </p>
       )}
@@ -83,7 +85,6 @@ function CategoryForm({ editingCategory, onSaved, onCancel }) {
           value={name}
           onChange={(e) => setName(e.target.value)}
           maxLength={100}
-          required
           autoFocus
           placeholder="e.g. Groceries"
           className="rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-300"

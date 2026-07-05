@@ -219,96 +219,96 @@ Implement a full-stack expense tracking application with a Java Spring Boot 4.0.
   - Set up React Router v6 routes in `App.jsx`: `/`, `/expenses`, `/expenses/new`, `/expenses/:id/edit`, `/categories`, `/comparison`, `/reports`
   - _Requirements: 6.6, 7.1–7.6, 8.1–8.6_
 
-- [ ] 14. Expense list and form pages
-  - [ ] 14.1 Implement `ExpenseTable`, `ExpenseRow`, and `ExpenseListPage`
+- [x] 14. Expense list and form pages
+  - [x] 14.1 Implement `ExpenseTable`, `ExpenseRow`, and `ExpenseListPage`
     - `ExpenseListPage` fetches `GET /api/v1/expenses` on mount and renders `ExpenseTable`
     - `ExpenseRow` shows amount, date, category, description with Edit and Delete buttons; Delete triggers `ConfirmDialog` before calling `DELETE /api/v1/expenses/{id}`
     - _Requirements: 2.4, 2.6, 2.7_
 
-  - [~] 14.2 Implement `ExpenseForm` and `ExpenseFormPage`
+  - [x] 14.2 Implement `ExpenseForm` and `ExpenseFormPage`
     - `ExpenseFormPage` at `/expenses/new` renders a blank form; at `/expenses/:id/edit` pre-fills from `GET /api/v1/expenses/{id}`
     - `ExpenseForm` validates client-side (positive amount, non-future date, category required) and submits to `POST` or `PUT`; displays field-level validation errors from the API response
     - _Requirements: 1.1–1.9, 2.1, 2.2_
 
-  - [ ]* 14.3 Write Vitest + React Testing Library tests for `ExpenseForm`
+  - [x]* 14.3 Write Vitest + React Testing Library tests for `ExpenseForm`
     - Test client-side validation prevents submission with invalid data
     - Test form pre-fills correctly in edit mode
     - _Requirements: 1.2, 1.3, 1.4, 2.2_
 
-- [ ] 15. Category management page
-  - [-] 15.1 Implement `CategoryList`, `CategoryForm`, and `CategoryPage`
+- [x] 15. Category management page
+  - [x] 15.1 Implement `CategoryList`, `CategoryForm`, and `CategoryPage`
     - `CategoryPage` fetches `GET /api/v1/categories` and renders `CategoryList` with inline edit and delete per row
     - `CategoryForm` handles create and update; shows 409 conflict and 400 validation errors from the API
     - Delete triggers `ConfirmDialog`; shows 409 error if category is in use
     - _Requirements: 5.1–5.9, 5.11_
 
-  - [ ]* 15.2 Write Vitest tests for `CategoryList` and `CategoryForm`
+  - [x]* 15.2 Write Vitest tests for `CategoryList` and `CategoryForm`
     - Test alphabetical rendering of categories
     - Test error display for duplicate name and in-use delete
     - _Requirements: 5.2, 5.8, 5.11_
 
-- [ ] 16. Dashboard — weekly, monthly, and yearly summary cards
-  - [-] 16.1 Implement `WeekNavigator`, `MonthNavigator`, `YearNavigator`
+- [x] 16. Dashboard — weekly, monthly, and yearly summary cards
+  - [x] 16.1 Implement `WeekNavigator`, `MonthNavigator`, `YearNavigator`
     - Each navigator maintains selected period in local state and exposes prev/next controls
     - `WeekNavigator` computes ISO week arithmetic; `MonthNavigator` and `YearNavigator` handle month/year rollover
     - _Requirements: 6.3, 7.4, 8.4_
 
-  - [~] 16.2 Implement `WeeklySummaryCard`
+  - [x] 16.2 Implement `WeeklySummaryCard`
     - Fetches `GET /api/v1/expenses/weekly` for the selected week; displays total, entry count, and per-category breakdown
     - Shows `LoadingSpinner` during fetch and `ErrorMessage` with retry on failure
     - _Requirements: 6.1–6.6_
 
-  - [~] 16.3 Implement `MonthlySummaryCard` with `DailyBarChart`
+  - [x] 16.3 Implement `MonthlySummaryCard` with `DailyBarChart`
     - Fetches `GET /api/v1/expenses/monthly` for the selected month; displays total, `DailyBarChart` (Recharts `BarChart` of daily totals), and per-category breakdown via `CategoryBreakdownTable`
     - _Requirements: 7.1–7.6_
 
-  - [~] 16.4 Implement `YearlySummaryCard` with `MonthlyLineChart`
+  - [x] 16.4 Implement `YearlySummaryCard` with `MonthlyLineChart`
     - Fetches `GET /api/v1/expenses/monthly` for each month of the selected year (or a dedicated yearly endpoint if added); displays total, `MonthlyLineChart` (Recharts `LineChart` of 12 monthly totals), and top-3 categories
     - _Requirements: 8.1–8.6_
 
-  - [~] 16.5 Implement `DashboardPage`
+  - [x] 16.5 Implement `DashboardPage`
     - Fetches weekly, monthly, and yearly summaries in parallel with `Promise.all` on initial load
     - Renders `WeeklySummaryCard`, `MonthlySummaryCard`, `YearlySummaryCard` side by side
     - _Requirements: 6.1–6.6, 7.1–7.6, 8.1–8.6_
 
-  - [ ]* 16.6 Write Vitest tests for navigator components
+  - [x]* 16.6 Write Vitest tests for navigator components
     - Test `WeekNavigator` ISO week arithmetic (week rollover, year boundary)
     - Test `MonthNavigator` and `YearNavigator` period arithmetic
     - _Requirements: 6.3, 7.4, 8.4_
 
-- [ ] 17. Comparison page
-  - [~] 17.1 Implement `DirectionalIndicator`
+- [x] 17. Comparison page
+  - [x] 17.1 Implement `DirectionalIndicator`
     - Renders ↑ green arrow (UP), ↓ red arrow (DOWN), or → grey dash (NEUTRAL) based on `specifiedTotal` vs `precedingTotal`
     - _Requirements: 9.7_
 
-  - [~] 17.2 Implement `MonthComparisonView`
+  - [x] 17.2 Implement `MonthComparisonView`
     - Fetches `GET /api/v1/expenses/comparison/monthly` for the selected month; displays totals, absolute difference, percentage change (or "N/A" when `percentageChangeAvailable=false`), `DirectionalIndicator`, and per-category breakdown table
     - _Requirements: 9.1–9.7_
 
-  - [~] 17.3 Implement `YearComparisonView` with `SideBySideBarChart`
+  - [x] 17.3 Implement `YearComparisonView` with `SideBySideBarChart`
     - Fetches `GET /api/v1/expenses/comparison/yearly` for the selected year; displays totals, absolute difference, percentage change, and `SideBySideBarChart` (Recharts grouped `BarChart` of 12 months × 2 years)
     - _Requirements: 10.1–10.6_
 
-  - [~] 17.4 Implement `ComparisonPage`
+  - [x] 17.4 Implement `ComparisonPage`
     - Renders `MonthComparisonView` and `YearComparisonView` with their respective navigators
     - _Requirements: 9.1–9.7, 10.1–10.6_
 
-  - [ ]* 17.5 Write Vitest tests for `DirectionalIndicator`
+  - [-]* 17.5 Write Vitest tests for `DirectionalIndicator`
     - Test UP, DOWN, and NEUTRAL cases with example inputs
     - _Requirements: 9.7_
 
-- [ ] 18. Report page
-  - [~] 18.1 Implement `ReportForm` and `ReportDownloadButton`
+- [x] 18. Report page
+  - [x] 18.1 Implement `ReportForm` and `ReportDownloadButton`
     - `ReportForm` allows selecting a predefined period or custom date range and a format (CSV / PDF)
     - `ReportDownloadButton` calls `POST /api/v1/reports/{format}` and triggers a browser file download using a Blob URL
     - Displays 400 error messages (invalid date range, unsupported format) inline
     - _Requirements: 11.1–11.8_
 
-  - [~] 18.2 Implement `ReportPage`
+  - [x] 18.2 Implement `ReportPage`
     - Renders `ReportForm` with `ReportDownloadButton`; shows `LoadingSpinner` during generation
     - _Requirements: 11.1–11.8_
 
-  - [ ]* 18.3 Write Vitest tests for `ReportForm`
+  - [-]* 18.3 Write Vitest tests for `ReportForm`
     - Test that start-after-end date validation prevents submission
     - Test predefined period selection populates correct date fields
     - _Requirements: 11.2, 11.7_
