@@ -82,7 +82,7 @@ Implement a full-stack expense tracking application with a Java Spring Boot 4.0.
     - Test all 4 endpoints for happy-path and error responses
     - _Requirements: 5.1–5.9, 5.11_
 
-- [~] 6. Checkpoint — category layer
+- [x] 6. Checkpoint — category layer
   - Ensure all category-related tests pass. Ask the user if questions arise.
 
 - [x] 7. Expense service and controller
@@ -141,7 +141,7 @@ Implement a full-stack expense tracking application with a Java Spring Boot 4.0.
     - **Property 15: Invalid month parameters are always rejected** — Validates: Requirements 4.3
     - **Property 16: Monthly response total and per-category breakdown are mathematically consistent** — Validates: Requirements 4.4, 4.5
 
-- [~] 9. Checkpoint — expense CRUD and views
+- [x] 9. Checkpoint — expense CRUD and views
   - Ensure all expense service and view tests pass. Ask the user if questions arise.
 
 - [x] 10. Comparison service and endpoints
@@ -293,7 +293,7 @@ Implement a full-stack expense tracking application with a Java Spring Boot 4.0.
     - Renders `MonthComparisonView` and `YearComparisonView` with their respective navigators
     - _Requirements: 9.1–9.7, 10.1–10.6_
 
-  - [-]* 17.5 Write Vitest tests for `DirectionalIndicator`
+  - [x]* 17.5 Write Vitest tests for `DirectionalIndicator`
     - Test UP, DOWN, and NEUTRAL cases with example inputs
     - _Requirements: 9.7_
 
@@ -308,12 +308,12 @@ Implement a full-stack expense tracking application with a Java Spring Boot 4.0.
     - Renders `ReportForm` with `ReportDownloadButton`; shows `LoadingSpinner` during generation
     - _Requirements: 11.1–11.8_
 
-  - [-]* 18.3 Write Vitest tests for `ReportForm`
+  - [x]* 18.3 Write Vitest tests for `ReportForm`
     - Test that start-after-end date validation prevents submission
     - Test predefined period selection populates correct date fields
     - _Requirements: 11.2, 11.7_
 
-- [~] 19. Final checkpoint — full stack integration
+- [x] 19. Final checkpoint — full stack integration
   - Ensure all backend and frontend tests pass. Verify CORS configuration allows the React dev server to reach the Spring Boot API. Ask the user if questions arise.
 
 ---
