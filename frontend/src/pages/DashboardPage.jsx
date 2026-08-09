@@ -20,6 +20,7 @@ import WeeklySummaryCard from '../components/dashboard/WeeklySummaryCard';
 import MonthlySummaryCard from '../components/dashboard/MonthlySummaryCard';
 import YearlySummaryCard from '../components/dashboard/YearlySummaryCard';
 import ExpensePieChartSection from '../components/dashboard/ExpensePieChartSection';
+import TodayExpenseCard from '../components/dashboard/TodayExpenseCard';
 
 /**
  * Returns the ISO week number for a given Date.
@@ -106,10 +107,10 @@ function DashboardPage() {
   }
 
   return (
-    <div className="space-y-6 p-4 sm:p-6">
+    <div className="space-y-6">
       <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
 
-      {/* Pie chart + Monthly summary (side by side) */}
+      {/* Row 1: Pie chart (monthly) + Monthly summary */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <ExpensePieChartSection />
         <MonthlySummaryCard
@@ -119,8 +120,9 @@ function DashboardPage() {
         />
       </div>
 
-      {/* Weekly summary card */}
+      {/* Row 2: Today's expense chart + Weekly summary */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <TodayExpenseCard />
         <WeeklySummaryCard
           year={weekYear}
           week={weekNum}
@@ -128,7 +130,7 @@ function DashboardPage() {
         />
       </div>
 
-      {/* Yearly summary card (bottom) */}
+      {/* Row 3: Yearly summary (full width) */}
       <div className="grid grid-cols-1 gap-6">
         <YearlySummaryCard
           year={cardYear}

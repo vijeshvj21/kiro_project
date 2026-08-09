@@ -1,35 +1,14 @@
 /**
- * A simple centered loading spinner.
+ * Modern loading spinner with pulsing animation.
  */
 function LoadingSpinner() {
   return (
-    <div
-      role="status"
-      aria-label="Loading"
-      className="flex items-center justify-center py-12"
-    >
-      <svg
-        className="h-10 w-10 animate-spin text-blue-500"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-      >
-        <circle
-          className="opacity-25"
-          cx="12"
-          cy="12"
-          r="10"
-          stroke="currentColor"
-          strokeWidth="4"
-        />
-        <path
-          className="opacity-75"
-          fill="currentColor"
-          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-        />
-      </svg>
-      <span className="sr-only">Loading…</span>
+    <div className="flex flex-col items-center justify-center py-12">
+      <div className="relative">
+        <div className="h-12 w-12 rounded-full border-4 border-blue-100"></div>
+        <div className="absolute left-0 top-0 h-12 w-12 animate-spin rounded-full border-4 border-transparent border-t-indigo-600"></div>
+      </div>
+      <p className="mt-4 text-sm font-medium text-gray-400 animate-pulse">Loading...</p>
     </div>
   );
 }
