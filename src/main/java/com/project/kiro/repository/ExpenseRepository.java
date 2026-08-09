@@ -83,4 +83,18 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
      * @return the number of expenses referencing this category
      */
     long countByCategoryId(Long categoryId);
+
+    /**
+     * Return the sum of debit expense amounts within [start, end].
+     */
+    @Query("SELECT COALESCE(SUM(e.amount), 0) FROM Expense e WHERE e.expenseDate BETWEEN :start AND :end AND (e.transactionType = 'DEBIT' OR e.transactionType IS NULL)")
+    BigDecimal sumDebitAmountByDateRange(@Param("start") LocalDate start, @Param("end") LocalDate end);
+
+    /**
+     * Return per-category totals for debit expenses within [start, end].
+     */
+    @Query("SELECT e.category.name, SUM(e.amount) FROM Expense e " +
+           "WHERE e.expenseDate BETWEEN :start AND :end AND (e.transactionType = 'DEBIT' OR e.transactionType IS NULL) " +
+           "GROUP BY e.category.name ORDER BY e.category.name")
+    List<Object[]> findDebitCategoryBreakdown(@Param("start") LocalDate start, @Param("end") LocalDate end);
 }

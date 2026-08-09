@@ -44,10 +44,10 @@ function MonthlyLineChart({ monthlyData }) {
           tickLine={false}
           axisLine={false}
           width={56}
-          tickFormatter={(v) => `$${v}`}
+          tickFormatter={(v) => `₹${v}`}
         />
         <Tooltip
-          formatter={(value) => [`$${Number(value).toFixed(2)}`, 'Amount']}
+          formatter={(value) => [`₹${Number(value).toFixed(2)}`, 'Amount']}
         />
         <Line
           type="monotone"

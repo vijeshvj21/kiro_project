@@ -24,6 +24,8 @@ public class DataInitializer implements ApplicationRunner {
             "Entertainment",
             "Healthcare",
             "Shopping",
+            "Education",
+            "Investment",
             "Other"
     );
 

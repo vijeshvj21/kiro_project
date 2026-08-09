@@ -232,6 +232,7 @@ public class ReportService {
                 .categoryId(expense.getCategory().getId())
                 .categoryName(expense.getCategory().getName())
                 .description(expense.getDescription())
+                .transactionType(expense.getTransactionType() != null ? expense.getTransactionType() : "DEBIT")
                 .build();
     }
 }

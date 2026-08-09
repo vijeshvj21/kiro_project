@@ -92,7 +92,7 @@ function WeeklySummaryCard({ year, week, onWeekChange }) {
                 Total
               </p>
               <p className="mt-1 text-2xl font-bold text-gray-900">
-                ${Number(data.total ?? 0).toFixed(2)}
+                ₹{Number(data.total ?? 0).toFixed(2)}
               </p>
             </div>
             <div className="rounded-md bg-gray-50 p-4">

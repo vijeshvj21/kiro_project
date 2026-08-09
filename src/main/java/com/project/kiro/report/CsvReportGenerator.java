@@ -36,7 +36,7 @@ public class CsvReportGenerator {
         StringWriter sw = new StringWriter();
 
         CSVFormat format = CSVFormat.DEFAULT.builder()
-                .setHeader("ID", "Date", "Category", "Amount", "Description")
+                .setHeader("ID", "Date", "Category", "Amount", "Type", "Description")
                 .build();
 
         try (CSVPrinter printer = new CSVPrinter(sw, format)) {
@@ -48,6 +48,7 @@ public class CsvReportGenerator {
                         expense.getExpenseDate(),
                         expense.getCategoryName(),
                         expense.getAmount(),
+                        expense.getTransactionType() != null ? expense.getTransactionType() : "DEBIT",
                         expense.getDescription()
                 );
             }

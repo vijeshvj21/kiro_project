@@ -18,8 +18,8 @@ import CategoryBreakdownTable from './CategoryBreakdownTable';
 
 /** Empty data shape returned when the API has no data for a month (req 7.5) */
 const EMPTY_DATA = {
-  totalAmount: 0,
-  expenseCount: 0,
+  total: 0,
+  entryCount: 0,
   expenses: [],
   categoryBreakdown: [],
 };
@@ -53,7 +53,7 @@ function MonthlySummaryCard({ year, month, onMonthChange }) {
 
   // Use fetched data or fall back to empty shape for display (req 7.5)
   const displayData = data ?? EMPTY_DATA;
-  const { totalAmount, expenseCount, expenses, categoryBreakdown } = displayData;
+  const { total, entryCount, expenses, categoryBreakdown } = displayData;
 
   return (
     <section className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
@@ -81,7 +81,7 @@ function MonthlySummaryCard({ year, month, onMonthChange }) {
                 Total Spent
               </p>
               <p className="mt-0.5 text-2xl font-bold text-gray-900">
-                ${Number(totalAmount).toFixed(2)}
+                ₹{Number(total || 0).toFixed(2)}
               </p>
             </div>
             <div>
@@ -89,7 +89,7 @@ function MonthlySummaryCard({ year, month, onMonthChange }) {
                 Entries
               </p>
               <p className="mt-0.5 text-2xl font-bold text-gray-900">
-                {expenseCount}
+                {entryCount}
               </p>
             </div>
           </div>

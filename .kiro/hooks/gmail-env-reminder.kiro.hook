@@ -1,0 +1,18 @@
+{
+  "enabled": true,
+  "name": "Gmail env reminder",
+  "description": "Reminds to run `. .\\set-env.ps1` before starting the Spring Boot backend, so Gmail OAuth credentials are loaded in the terminal session.",
+  "version": "1",
+  "when": {
+    "type": "preToolUse",
+    "toolTypes": [
+      "shell"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "If the tool being used is executing a command that starts the Spring Boot app (e.g., contains \"spring-boot:run\" or \"mvnw spring-boot\"), remind the user: \"Remember to run `. .\\set-env.ps1` first in your terminal to load the Gmail OAuth2 environment variables (GMAIL_CLIENT_ID and GMAIL_CLIENT_SECRET). These are session-scoped and need to be set each time you open a new terminal.\" If the command is unrelated to starting the app, do nothing."
+  },
+  "workspaceFolderName": "kiro",
+  "shortName": "gmail-env-reminder"
+}

@@ -68,10 +68,10 @@ function DailyBarChart({ year, month, expenses }) {
           tickLine={false}
           axisLine={false}
           width={48}
-          tickFormatter={(v) => `$${v}`}
+          tickFormatter={(v) => `₹${v}`}
         />
         <Tooltip
-          formatter={(value) => [`$${Number(value).toFixed(2)}`, 'Amount']}
+          formatter={(value) => [`₹${Number(value).toFixed(2)}`, 'Amount']}
           labelFormatter={(label) => `Day ${label}`}
         />
         <Bar dataKey="total" fill="#3b82f6" radius={[2, 2, 0, 0]} />

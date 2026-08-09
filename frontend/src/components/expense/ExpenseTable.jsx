@@ -23,31 +23,37 @@ function ExpenseTable({ expenses, onDelete }) {
           <tr>
             <th
               scope="col"
-              className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500"
+              className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wide text-gray-500"
             >
               Date
             </th>
             <th
               scope="col"
-              className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500"
+              className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wide text-gray-500"
             >
               Amount
             </th>
             <th
               scope="col"
-              className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500"
+              className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wide text-gray-500"
+            >
+              Type
+            </th>
+            <th
+              scope="col"
+              className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wide text-gray-500"
             >
               Category
             </th>
             <th
               scope="col"
-              className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500"
+              className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wide text-gray-500"
             >
               Description
             </th>
             <th
               scope="col"
-              className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500"
+              className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wide text-gray-500"
             >
               Actions
             </th>

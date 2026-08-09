@@ -67,7 +67,7 @@ function MonthComparisonView({ year, month, onMonthChange }) {
                 This Month
               </p>
               <p className="mt-1 text-2xl font-bold text-gray-900">
-                ${Number(data.specifiedMonth.total).toFixed(2)}
+                ₹{Number(data.specifiedMonth.total).toFixed(2)}
               </p>
             </div>
             <div className="rounded-lg border border-gray-200 bg-white p-4 text-center shadow-sm">
@@ -75,7 +75,7 @@ function MonthComparisonView({ year, month, onMonthChange }) {
                 Last Month
               </p>
               <p className="mt-1 text-2xl font-bold text-gray-900">
-                ${Number(data.precedingMonth.total).toFixed(2)}
+                ₹{Number(data.precedingMonth.total).toFixed(2)}
               </p>
             </div>
           </div>
@@ -92,7 +92,7 @@ function MonthComparisonView({ year, month, onMonthChange }) {
 
             <p className="text-sm text-gray-700">
               <span className="font-medium">Absolute Difference:</span>{' '}
-              ${Number(data.absoluteDifference).toFixed(2)}
+              ₹{Number(data.absoluteDifference).toFixed(2)}
             </p>
 
             <p className="text-sm text-gray-700">
@@ -126,10 +126,10 @@ function MonthComparisonView({ year, month, onMonthChange }) {
                       >
                         <td className="py-2 pr-4 text-gray-700">{categoryName}</td>
                         <td className="py-2 pr-4 text-right font-medium text-gray-900">
-                          ${Number(specifiedMonthTotal).toFixed(2)}
+                          ₹{Number(specifiedMonthTotal).toFixed(2)}
                         </td>
                         <td className="py-2 text-right font-medium text-gray-900">
-                          ${Number(precedingMonthTotal).toFixed(2)}
+                          ₹{Number(precedingMonthTotal).toFixed(2)}
                         </td>
                       </tr>
                     )

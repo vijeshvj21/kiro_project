@@ -73,13 +73,13 @@ function YearlySummaryCard({ year, onYearChange }) {
 
   /** Sum of all 12 monthly totals (req 8.1) */
   const yearTotal = monthlyResults.reduce(
-    (sum, r) => sum + Number(r?.totalAmount ?? 0),
+    (sum, r) => sum + Number(r?.total ?? 0),
     0,
   );
 
   /** Total expense entry count across all months (req 8.1) */
   const yearEntryCount = monthlyResults.reduce(
-    (sum, r) => sum + Number(r?.expenseCount ?? 0),
+    (sum, r) => sum + Number(r?.entryCount ?? 0),
     0,
   );
 
@@ -91,7 +91,7 @@ function YearlySummaryCard({ year, onYearChange }) {
     const result = monthlyResults[month - 1];
     return {
       month,
-      total: Number(result?.totalAmount ?? 0),
+      total: Number(result?.total ?? 0),
     };
   });
 
@@ -124,7 +124,7 @@ function YearlySummaryCard({ year, onYearChange }) {
                 Total Spent
               </p>
               <p className="mt-0.5 text-2xl font-bold text-gray-900">
-                ${yearTotal.toFixed(2)}
+                ₹{yearTotal.toFixed(2)}
               </p>
             </div>
             <div>

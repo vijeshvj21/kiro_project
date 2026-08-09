@@ -77,13 +77,13 @@ function YearComparisonView({ year, onYearChange }) {
             <div className="rounded-md bg-blue-50 p-4 text-center">
               <p className="text-sm font-medium text-blue-600">{specifiedYear}</p>
               <p className="mt-1 text-2xl font-bold text-blue-800">
-                ${Number(specifiedTotal).toFixed(2)}
+                ₹{Number(specifiedTotal).toFixed(2)}
               </p>
             </div>
             <div className="rounded-md bg-gray-50 p-4 text-center">
               <p className="text-sm font-medium text-gray-500">{precedingYear}</p>
               <p className="mt-1 text-2xl font-bold text-gray-700">
-                ${Number(precedingTotal).toFixed(2)}
+                ₹{Number(precedingTotal).toFixed(2)}
               </p>
             </div>
           </div>
@@ -99,7 +99,7 @@ function YearComparisonView({ year, onYearChange }) {
               <span className="text-sm text-gray-500">Difference:</span>
               <span className="font-semibold text-gray-800">
                 {Number(absoluteDiff) >= 0 ? '+' : ''}
-                ${Math.abs(Number(absoluteDiff)).toFixed(2)}
+                ₹{Math.abs(Number(absoluteDiff)).toFixed(2)}
               </span>
             </div>
 

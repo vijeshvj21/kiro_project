@@ -19,6 +19,7 @@ import { getWeeklyExpenses, getMonthlyExpenses } from '../api/expenses';
 import WeeklySummaryCard from '../components/dashboard/WeeklySummaryCard';
 import MonthlySummaryCard from '../components/dashboard/MonthlySummaryCard';
 import YearlySummaryCard from '../components/dashboard/YearlySummaryCard';
+import ExpensePieChartSection from '../components/dashboard/ExpensePieChartSection';
 
 /**
  * Returns the ISO week number for a given Date.
@@ -108,24 +109,27 @@ function DashboardPage() {
     <div className="space-y-6 p-4 sm:p-6">
       <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
 
-      {/*
-        Responsive grid:
-        - Single column on small screens (stacked)
-        - Three columns on large screens (side by side)
-      */}
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        <WeeklySummaryCard
-          year={weekYear}
-          week={weekNum}
-          onWeekChange={onWeekChange}
-        />
-
+      {/* Pie chart + Monthly summary (side by side) */}
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <ExpensePieChartSection />
         <MonthlySummaryCard
           year={monthYear}
           month={monthNum}
           onMonthChange={onMonthChange}
         />
+      </div>
 
+      {/* Weekly summary card */}
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <WeeklySummaryCard
+          year={weekYear}
+          week={weekNum}
+          onWeekChange={onWeekChange}
+        />
+      </div>
+
+      {/* Yearly summary card (bottom) */}
+      <div className="grid grid-cols-1 gap-6">
         <YearlySummaryCard
           year={cardYear}
           onYearChange={onYearChange}

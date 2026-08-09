@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Environment variables (contains secrets) ###
+set-env.ps1
+.env

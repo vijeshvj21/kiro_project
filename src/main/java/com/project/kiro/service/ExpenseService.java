@@ -209,10 +209,10 @@ public class ExpenseService {
         LocalDate end = start.withDayOfMonth(start.lengthOfMonth());
 
         List<Expense> expenses = expenseRepository.findByExpenseDateBetweenOrderByExpenseDateDesc(start, end);
-        BigDecimal total = expenseRepository.sumAmountByDateRange(start, end);
+        BigDecimal total = expenseRepository.sumDebitAmountByDateRange(start, end);
 
         List<MonthlyExpenseResponse.CategoryTotal> categoryBreakdown =
-                expenseRepository.findCategoryBreakdown(start, end)
+                expenseRepository.findDebitCategoryBreakdown(start, end)
                         .stream()
                         .map(row -> MonthlyExpenseResponse.CategoryTotal.builder()
                                 .categoryName((String) row[0])
@@ -248,6 +248,7 @@ public class ExpenseService {
                 .categoryId(expense.getCategory().getId())
                 .categoryName(expense.getCategory().getName())
                 .description(expense.getDescription())
+                .transactionType(expense.getTransactionType() != null ? expense.getTransactionType() : "DEBIT")
                 .build();
     }
 }

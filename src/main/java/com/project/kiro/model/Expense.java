@@ -34,4 +34,7 @@ public class Expense {
 
     @Column(length = 255)
     private String description;
+
+    @Column(name = "transaction_type", length = 10)
+    private String transactionType; // DEBIT or CREDIT
 }

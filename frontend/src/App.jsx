@@ -6,6 +6,7 @@ import ExpenseFormPage from './pages/ExpenseFormPage';
 import CategoryPage from './pages/CategoryPage';
 import ComparisonPage from './pages/ComparisonPage';
 import ReportPage from './pages/ReportPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/categories"         element={<CategoryPage />} />
           <Route path="/comparison"         element={<ComparisonPage />} />
           <Route path="/reports"            element={<ReportPage />} />
+          <Route path="*"                   element={<NotFoundPage />} />
         </Routes>
       </Layout>
     </BrowserRouter>

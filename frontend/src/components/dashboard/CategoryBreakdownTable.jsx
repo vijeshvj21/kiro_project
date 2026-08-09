@@ -31,7 +31,7 @@ function CategoryBreakdownTable({ breakdown }) {
           >
             <td className="py-2 pr-4 text-gray-700">{categoryName}</td>
             <td className="py-2 text-right font-medium text-gray-900">
-              ${Number(total).toFixed(2)}
+              ₹{Number(total).toFixed(2)}
             </td>
           </tr>
         ))}

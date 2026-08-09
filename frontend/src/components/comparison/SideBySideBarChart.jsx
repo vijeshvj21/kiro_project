@@ -51,10 +51,10 @@ function SideBySideBarChart({ data, specifiedYear, precedingYear }) {
           tickLine={false}
           axisLine={false}
           width={52}
-          tickFormatter={(v) => `$${v}`}
+          tickFormatter={(v) => `₹${v}`}
         />
         <Tooltip
-          formatter={(value, name) => [`$${Number(value).toFixed(2)}`, name]}
+          formatter={(value, name) => [`₹${Number(value).toFixed(2)}`, name]}
           labelFormatter={(label) => label}
         />
         <Legend />

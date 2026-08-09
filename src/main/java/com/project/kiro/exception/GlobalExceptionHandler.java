@@ -93,6 +93,50 @@ public class GlobalExceptionHandler {
     }
 
     // -----------------------------------------------------------------------
+    // 400 Bad Request — Gmail account not connected
+    // -----------------------------------------------------------------------
+    @ExceptionHandler(GmailNotConnectedException.class)
+    public ResponseEntity<Map<String, Object>> handleGmailNotConnected(
+            GmailNotConnectedException ex,
+            HttpServletRequest request) {
+
+        return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), request.getRequestURI());
+    }
+
+    // -----------------------------------------------------------------------
+    // 409 Conflict — Sync already in progress
+    // -----------------------------------------------------------------------
+    @ExceptionHandler(SyncInProgressException.class)
+    public ResponseEntity<Map<String, Object>> handleSyncInProgress(
+            SyncInProgressException ex,
+            HttpServletRequest request) {
+
+        return buildResponse(HttpStatus.CONFLICT, ex.getMessage(), request.getRequestURI());
+    }
+
+    // -----------------------------------------------------------------------
+    // 502 Bad Gateway — Gmail API error
+    // -----------------------------------------------------------------------
+    @ExceptionHandler(GmailApiException.class)
+    public ResponseEntity<Map<String, Object>> handleGmailApiException(
+            GmailApiException ex,
+            HttpServletRequest request) {
+
+        return buildResponse(HttpStatus.BAD_GATEWAY, ex.getMessage(), request.getRequestURI());
+    }
+
+    // -----------------------------------------------------------------------
+    // 504 Gateway Timeout — Sync timeout
+    // -----------------------------------------------------------------------
+    @ExceptionHandler(SyncTimeoutException.class)
+    public ResponseEntity<Map<String, Object>> handleSyncTimeout(
+            SyncTimeoutException ex,
+            HttpServletRequest request) {
+
+        return buildResponse(HttpStatus.GATEWAY_TIMEOUT, ex.getMessage(), request.getRequestURI());
+    }
+
+    // -----------------------------------------------------------------------
     // 500 Internal Server Error — DB constraint violation
     // -----------------------------------------------------------------------
     @ExceptionHandler(DataIntegrityViolationException.class)
