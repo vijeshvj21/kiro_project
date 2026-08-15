@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAllExpenses } from '../api/expenses';
+import { getAllCategories } from '../api/categories';
 import ExpenseTable from '../components/expense/ExpenseTable';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import ErrorMessage from '../components/common/ErrorMessage';
@@ -16,13 +17,15 @@ function ExpenseListPage() {
   const [typeFilter, setTypeFilter] = useState('ALL'); // ALL, DEBIT, CREDIT
   const [categoryFilter, setCategoryFilter] = useState('ALL'); // ALL or category name
   const [currentPage, setCurrentPage] = useState(1);
+  const [allCategories, setAllCategories] = useState([]);
 
   const fetchExpenses = async () => {
     setLoading(true);
     setError(null);
     try {
-      const data = await getAllExpenses();
+      const [data, cats] = await Promise.all([getAllExpenses(), getAllCategories()]);
       setExpenses(data);
+      setAllCategories(cats);
     } catch (err) {
       setError('Failed to load expenses. Please try again.');
     } finally {
@@ -41,6 +44,12 @@ function ExpenseListPage() {
 
   const handleDelete = (deletedId) => {
     setExpenses((prev) => prev.filter((e) => e.id !== deletedId));
+  };
+
+  const handleCategoryChange = (expenseId, updatedExpense) => {
+    setExpenses((prev) => prev.map((e) => 
+      e.id === expenseId ? { ...e, categoryId: updatedExpense.categoryId, categoryName: updatedExpense.categoryName } : e
+    ));
   };
 
   // Get unique categories from expenses for the dropdown
@@ -122,7 +131,7 @@ function ExpenseListPage() {
 
       {!loading && !error && (
         <>
-          <ExpenseTable expenses={paginatedExpenses} onDelete={handleDelete} />
+          <ExpenseTable expenses={paginatedExpenses} onDelete={handleDelete} categories={allCategories} onCategoryChange={handleCategoryChange} />
 
           {/* Pagination */}
           {totalPages > 1 && (

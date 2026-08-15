@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const navItems = [
   { to: '/',           label: 'Dashboard',  icon: '📊' },
@@ -12,6 +12,14 @@ const navItems = [
  * Modern navigation bar with gradient background and icons.
  */
 function Navbar() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('spendwise_auth');
+    localStorage.removeItem('spendwise_user');
+    navigate('/login');
+  };
+
   return (
     <nav className="sticky top-0 z-40 border-b border-white/10 bg-gradient-to-r from-indigo-700 via-blue-700 to-purple-700 text-white shadow-xl shadow-blue-900/20 backdrop-blur-lg" aria-label="Main navigation">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
@@ -51,6 +59,15 @@ function Navbar() {
               </NavLink>
             </li>
           ))}
+          <li>
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-medium text-red-200 transition-all duration-200 hover:bg-red-500/20 hover:text-white"
+            >
+              <span className="text-base">🚪</span>
+              Logout
+            </button>
+          </li>
         </ul>
       </div>
     </nav>

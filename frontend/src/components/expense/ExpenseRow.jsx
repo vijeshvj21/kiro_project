@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ConfirmDialog from '../common/ConfirmDialog';
-import { deleteExpense } from '../../api/expenses';
+import { deleteExpense, updateExpense } from '../../api/expenses';
 
 // Category colors matching the pie chart
 const CATEGORY_COLORS = {
@@ -21,11 +21,12 @@ function getCategoryColor(categoryName) {
 }
 
 /**
- * A single row in the expense table.
+ * A single row in the expense table with inline category reassignment.
  */
-function ExpenseRow({ expense, onDelete }) {
+function ExpenseRow({ expense, onDelete, categories, onCategoryChange }) {
   const navigate = useNavigate();
   const [showConfirm, setShowConfirm] = useState(false);
+  const [changingCategory, setChangingCategory] = useState(false);
 
   const isCredit = expense.transactionType === 'CREDIT';
   const formattedAmount = `₹${Number(expense.amount).toFixed(2)}`;
@@ -51,9 +52,29 @@ function ExpenseRow({ expense, onDelete }) {
     setShowConfirm(false);
   };
 
+  const handleCategoryChange = async (e) => {
+    const newCategoryId = Number(e.target.value);
+    if (!newCategoryId) return;
+
+    setChangingCategory(true);
+    try {
+      const updated = await updateExpense(expense.id, {
+        amount: expense.amount,
+        expenseDate: expense.expenseDate,
+        categoryId: newCategoryId,
+        description: expense.description,
+      });
+      if (onCategoryChange) onCategoryChange(expense.id, updated);
+    } catch (err) {
+      // Silently fail — category remains unchanged visually
+    } finally {
+      setChangingCategory(false);
+    }
+  };
+
   return (
     <>
-      <tr className="border-b border-gray-200 hover:bg-gray-50">
+      <tr className="border-b border-gray-200 hover:bg-gray-50/80 transition-colors">
         <td className="px-4 py-3 text-base text-gray-700">{formattedDate}</td>
         <td className={`px-4 py-3 text-base font-medium ${isCredit ? 'text-green-600' : 'text-red-600'}`}>
           {formattedAmount}
@@ -67,8 +88,24 @@ function ExpenseRow({ expense, onDelete }) {
             {isCredit ? 'Credit' : 'Debit'}
           </span>
         </td>
-        <td className="px-4 py-3 text-base font-semibold" style={{ color: categoryColor }}>
-          {categoryName}
+        <td className="px-4 py-3 text-base">
+          {categories && categories.length > 0 ? (
+            <select
+              value={expense.categoryId}
+              onChange={handleCategoryChange}
+              disabled={changingCategory}
+              className="rounded-lg border border-gray-200 px-2 py-1 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-200 transition-all disabled:opacity-50"
+              style={{ color: categoryColor }}
+            >
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.id} style={{ color: getCategoryColor(cat.name) }}>
+                  {cat.name}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <span className="font-semibold" style={{ color: categoryColor }}>{categoryName}</span>
+          )}
         </td>
         <td className="px-4 py-3 text-base text-gray-700">
           {expense.description || '—'}

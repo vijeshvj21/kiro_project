@@ -21,6 +21,7 @@ import MonthlySummaryCard from '../components/dashboard/MonthlySummaryCard';
 import YearlySummaryCard from '../components/dashboard/YearlySummaryCard';
 import ExpensePieChartSection from '../components/dashboard/ExpensePieChartSection';
 import TodayExpenseCard from '../components/dashboard/TodayExpenseCard';
+import MonthlyTrendChart from '../components/dashboard/MonthlyTrendChart';
 
 /**
  * Returns the ISO week number for a given Date.
@@ -130,7 +131,10 @@ function DashboardPage() {
         />
       </div>
 
-      {/* Row 3: Yearly summary (full width) */}
+      {/* Row 3: Monthly trend bar chart (full width) */}
+      <MonthlyTrendChart />
+
+      {/* Row 4: Yearly summary (full width) */}
       <div className="grid grid-cols-1 gap-6">
         <YearlySummaryCard
           year={cardYear}

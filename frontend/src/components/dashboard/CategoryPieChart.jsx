@@ -2,30 +2,50 @@ import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recha
 
 // Fixed colors per category for consistent visual identity
 const CATEGORY_COLORS = {
-  'Food': '#ef4444',        // Red
-  'Transport': '#3b82f6',   // Blue
-  'Shopping': '#f59e0b',    // Amber
-  'Entertainment': '#8b5cf6', // Purple
-  'Healthcare': '#10b981',  // Green
-  'Utilities': '#06b6d4',   // Cyan
-  'Education': '#ec4899',   // Pink
-  'Investment': '#f97316',  // Orange
-  'Other': '#6b7280',       // Gray
+  'Food': '#ef4444',
+  'Transport': '#3b82f6',
+  'Shopping': '#f59e0b',
+  'Entertainment': '#8b5cf6',
+  'Healthcare': '#10b981',
+  'Utilities': '#06b6d4',
+  'Education': '#ec4899',
+  'Investment': '#f97316',
+  'Savings': '#84cc16',
+  'Other': '#6b7280',
 };
 
-// Fallback colors for unknown categories
 const FALLBACK_COLORS = ['#06b6d4', '#ec4899', '#84cc16', '#f97316', '#14b8a6', '#a855f7', '#eab308', '#0ea5e9'];
 
 function getCategoryColor(categoryName, index) {
   return CATEGORY_COLORS[categoryName] || FALLBACK_COLORS[index % FALLBACK_COLORS.length];
 }
 
+// Custom label renderer that positions text outside the pie with category color
+const renderCustomLabel = ({ cx, cy, midAngle, outerRadius, name, percent, index, payload }) => {
+  const RADIAN = Math.PI / 180;
+  const radius = outerRadius + 20;
+  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+  const color = getCategoryColor(name, index);
+
+  return (
+    <text
+      x={x}
+      y={y}
+      fill={color}
+      textAnchor={x > cx ? 'start' : 'end'}
+      dominantBaseline="central"
+      fontSize={11}
+      fontWeight={600}
+    >
+      {`${name} ${(percent * 100).toFixed(0)}%`}
+    </text>
+  );
+};
+
 /**
  * CategoryPieChart — renders a donut-style pie chart showing expense breakdown
- * by category. Each category has a consistent, fixed color for easy recognition.
- *
- * Props:
- *   data — array of { categoryName: string, total: number }
+ * by category with labels positioned outside the chart.
  */
 export default function CategoryPieChart({ data }) {
   if (!data || data.length === 0) {
@@ -44,11 +64,11 @@ export default function CategoryPieChart({ data }) {
         <Pie
           data={chartData}
           cx="50%"
-          cy="50%"
-          innerRadius={55}
-          outerRadius={110}
+          cy="45%"
+          innerRadius={45}
+          outerRadius={80}
           dataKey="value"
-          label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+          label={renderCustomLabel}
           labelLine={true}
         >
           {chartData.map((entry) => (
@@ -57,11 +77,11 @@ export default function CategoryPieChart({ data }) {
         </Pie>
         <Tooltip
           formatter={(value) => [`₹${Number(value).toFixed(2)}`, 'Amount']}
-          contentStyle={{ borderRadius: '8px', border: '1px solid #e5e7eb' }}
+          contentStyle={{ borderRadius: '8px', border: '1px solid #e5e7eb', fontSize: '12px' }}
         />
         <Legend
-          wrapperStyle={{ paddingTop: '16px' }}
-          formatter={(value) => <span className="text-sm text-gray-700">{value}</span>}
+          wrapperStyle={{ paddingTop: '8px', fontSize: '12px' }}
+          iconSize={10}
         />
       </PieChart>
     </ResponsiveContainer>
