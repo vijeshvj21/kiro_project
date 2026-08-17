@@ -4,25 +4,54 @@
 
 @layer base {
   body {
-    @apply bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 min-h-screen;
+    @apply min-h-screen antialiased;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 50%, #faf5ff 100%);
   }
 }
 
 @layer components {
   .card {
-    @apply rounded-2xl border border-gray-100 bg-white/80 backdrop-blur-sm p-6 shadow-lg shadow-gray-100/50 transition-all duration-200 hover:shadow-xl hover:shadow-gray-200/50;
+    @apply rounded-2xl bg-white p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04),0_6px_24px_rgba(0,0,0,0.04)] border border-gray-100/60 transition-all duration-300;
+  }
+
+  .card:hover {
+    @apply shadow-[0_4px_12px_rgba(0,0,0,0.06),0_12px_40px_rgba(0,0,0,0.06)] -translate-y-0.5;
   }
 
   .btn-primary {
-    @apply rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-blue-200 transition-all duration-200 hover:from-blue-700 hover:to-indigo-700 hover:shadow-lg hover:shadow-blue-300 active:scale-[0.98];
+    @apply rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-violet-200/60 transition-all duration-200 hover:from-violet-500 hover:to-indigo-500 hover:shadow-xl hover:shadow-violet-300/60 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98];
   }
 
   .btn-secondary {
-    @apply rounded-lg bg-white border border-gray-200 px-5 py-2.5 text-sm font-semibold text-gray-700 shadow-sm transition-all duration-200 hover:bg-gray-50 hover:border-gray-300 hover:shadow-md active:scale-[0.98];
+    @apply rounded-xl bg-white border border-gray-200/80 px-5 py-2.5 text-sm font-semibold text-gray-700 shadow-sm transition-all duration-200 hover:bg-gray-50 hover:border-gray-300 hover:shadow-md active:scale-[0.98];
   }
+}
 
-  .badge {
-    @apply inline-flex items-center rounded-full px-2.5 py-1 text-xs font-bold tracking-wide;
-  }
+/* Animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.animate-slide-down {
+  animation: slideDown 0.3s ease-out;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.2s ease-out;
 }

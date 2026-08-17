@@ -96,10 +96,10 @@ function MonthComparisonView({ year, month, onMonthChange }) {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-gray-200 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
-                    <th className="pb-2 pr-4">Category</th>
-                    <th className="pb-2 pr-4 text-right">This Month ({currentMonthName})</th>
-                    <th className="pb-2 pr-4 text-right">Last Month ({prev.name})</th>
-                    <th className="pb-2 text-center">Trend</th>
+                    <th className="pb-2 w-[30%]">Category</th>
+                    <th className="pb-2 w-[25%] text-right">This Month ({currentMonthName})</th>
+                    <th className="pb-2 w-[25%] text-right">Last Month ({prev.name})</th>
+                    <th className="pb-2 w-[20%] text-right">Trend</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -114,16 +114,16 @@ function MonthComparisonView({ year, month, onMonthChange }) {
                           key={categoryName}
                           className="border-b border-gray-100 last:border-0"
                         >
-                          <td className="py-2 pr-4 text-gray-700 font-medium">{categoryName}</td>
-                          <td className="py-2 pr-4 text-right font-medium text-gray-900">
+                          <td className="py-2 text-gray-700 font-medium">{categoryName}</td>
+                          <td className="py-2 text-right font-medium text-gray-900">
                             ₹{current.toFixed(2)}
                           </td>
-                          <td className="py-2 pr-4 text-right font-medium text-gray-500">
+                          <td className="py-2 text-right font-medium text-gray-500">
                             ₹{previous.toFixed(2)}
                           </td>
-                          <td className="py-2 text-center">
+                          <td className="py-2 text-right">
                             {diff > 0 && (
-                              <span className="inline-flex items-center gap-0.5 text-red-500 font-semibold text-xs">
+                              <span className="inline-flex items-center justify-end gap-0.5 text-red-500 font-semibold text-xs">
                                 <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                                   <path fillRule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L10 4.414l-3.293 3.293a1 1 0 01-1.414 0z" clipRule="evenodd"/>
                                 </svg>
@@ -131,7 +131,7 @@ function MonthComparisonView({ year, month, onMonthChange }) {
                               </span>
                             )}
                             {diff < 0 && (
-                              <span className="inline-flex items-center gap-0.5 text-green-500 font-semibold text-xs">
+                              <span className="inline-flex items-center justify-end gap-0.5 text-green-500 font-semibold text-xs">
                                 <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                                   <path fillRule="evenodd" d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L10 15.586l3.293-3.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                                 </svg>

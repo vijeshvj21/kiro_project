@@ -9,14 +9,16 @@ function ReportPage() {
   const [reportParams, setReportParams] = useState(null);
 
   return (
-    <div className="mx-auto max-w-lg space-y-6 py-8">
-      <h1 className="text-2xl font-bold text-gray-900">Reports</h1>
+    <div className="space-y-6">
+      <div className="mb-2">
+        <h1 className="text-3xl font-extrabold bg-gradient-to-r from-gray-900 via-violet-900 to-indigo-900 bg-clip-text text-transparent">Reports</h1>
+        <p className="text-sm text-gray-500 mt-1">Generate and download your expense reports.</p>
+      </div>
 
-      <ReportForm onGenerate={setReportParams} />
-
-      {reportParams && (
-        <ReportDownloadButton reportParams={reportParams} />
-      )}
+      <div className="max-w-lg space-y-6">
+        <ReportForm onGenerate={setReportParams} />
+        {reportParams && <ReportDownloadButton reportParams={reportParams} />}
+      </div>
     </div>
   );
 }

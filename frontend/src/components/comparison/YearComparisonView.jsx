@@ -16,17 +16,23 @@
  * Requirements: 10.1–10.6
  */
 import { useEffect, useState, useCallback } from 'react';
-import { getYearlyComparison } from '../../api/expenses';
+import { getYearlyComparison, getMonthlyExpenses } from '../../api/expenses';
 import YearNavigator from '../dashboard/YearNavigator';
 import DirectionalIndicator from './DirectionalIndicator';
 import SideBySideBarChart from './SideBySideBarChart';
+import CategoryPieChart from '../dashboard/CategoryPieChart';
 import LoadingSpinner from '../common/LoadingSpinner';
 import ErrorMessage from '../common/ErrorMessage';
+
+const MONTH_FULL = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 function YearComparisonView({ year, onYearChange }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [selectedMonth, setSelectedMonth] = useState(null);
+  const [popupData, setPopupData] = useState(null);
+  const [popupLoading, setPopupLoading] = useState(false);
 
   const fetchData = useCallback(() => {
     setLoading(true);
@@ -46,6 +52,28 @@ function YearComparisonView({ year, onYearChange }) {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  const handleBarClick = async (month) => {
+    setSelectedMonth(month);
+    setPopupLoading(true);
+    try {
+      const result = await getMonthlyExpenses(year, month);
+      const breakdown = (result?.categoryBreakdown ?? []).map(({ categoryName, total }) => ({
+        categoryName,
+        total: Number(total),
+      }));
+      setPopupData(breakdown);
+    } catch {
+      setPopupData([]);
+    } finally {
+      setPopupLoading(false);
+    }
+  };
+
+  const closePopup = () => {
+    setSelectedMonth(null);
+    setPopupData(null);
+  };
 
   const specifiedTotal = data?.specifiedYear?.total ?? 0;
   const precedingTotal = data?.precedingYear?.total ?? 0;
@@ -120,9 +148,42 @@ function YearComparisonView({ year, onYearChange }) {
               data={monthlyBreakdown}
               specifiedYear={specifiedYear}
               precedingYear={precedingYear}
+              onBarClick={handleBarClick}
             />
           </div>
         </>
+      )}
+
+      {/* Popup modal for month category breakdown */}
+      {selectedMonth !== null && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm" onClick={closePopup}>
+          <div className="relative w-full max-w-xl mx-4 rounded-3xl bg-white p-8 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            <button onClick={closePopup} className="absolute top-4 right-4 h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-200 hover:text-gray-700 transition-colors">✕</button>
+            <div className="mb-6 text-center">
+              <h3 className="text-xl font-bold text-gray-900">{MONTH_FULL[selectedMonth - 1]} {specifiedYear}</h3>
+              <p className="text-sm text-gray-500 mt-1">Category Breakdown</p>
+            </div>
+            {popupLoading ? (
+              <LoadingSpinner />
+            ) : popupData && popupData.length > 0 ? (
+              <>
+                <CategoryPieChart data={popupData} />
+                <div className="mt-4 border-t border-gray-100 pt-4">
+                  <div className="grid grid-cols-2 gap-2">
+                    {popupData.map(({ categoryName, total }) => (
+                      <div key={categoryName} className="flex items-center justify-between rounded-lg bg-gray-50 px-3 py-2">
+                        <span className="text-xs font-medium text-gray-600">{categoryName}</span>
+                        <span className="text-xs font-bold text-gray-900">₹{Number(total).toFixed(0)}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </>
+            ) : (
+              <p className="py-8 text-center text-sm text-gray-500">No data for this month.</p>
+            )}
+          </div>
+        </div>
       )}
     </div>
   );

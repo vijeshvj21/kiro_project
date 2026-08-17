@@ -109,21 +109,24 @@ function DashboardPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+      <div className="mb-2">
+        <h1 className="text-3xl font-extrabold bg-gradient-to-r from-gray-900 via-violet-900 to-indigo-900 bg-clip-text text-transparent">Dashboard</h1>
+        <p className="text-sm text-gray-500 mt-1">Welcome back! Here's your financial overview.</p>
+      </div>
 
-      {/* Row 1: Pie chart (monthly) + Monthly summary */}
+      {/* Row 1: Expense Breakdown pie chart + Today's expenses */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <ExpensePieChartSection />
+        <TodayExpenseCard />
+      </div>
+
+      {/* Row 2: Monthly summary + Weekly summary */}
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <MonthlySummaryCard
           year={monthYear}
           month={monthNum}
           onMonthChange={onMonthChange}
         />
-      </div>
-
-      {/* Row 2: Today's expense chart + Weekly summary */}
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <TodayExpenseCard />
         <WeeklySummaryCard
           year={weekYear}
           week={weekNum}
